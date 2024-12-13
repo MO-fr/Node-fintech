@@ -12,6 +12,7 @@ const app = express(); // Create an Express application
 app.set('view engine', 'ejs');
 app.set('views', path.join(dirname, './views'));
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());

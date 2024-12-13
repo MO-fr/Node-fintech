@@ -3,7 +3,7 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/config.js';
 
 // Define the User model
-const User = sequelize.define('User', {
+const user = sequelize.define('User', {
   // Define the ID field
   id: {
     type: DataTypes.INTEGER, // Integer data type
@@ -47,4 +47,4 @@ const User = sequelize.define('User', {
 
 
 // Export the User model
-export default User;
+export default user;

@@ -5,7 +5,6 @@ import  User  from '../models/user.js'; // Assuming you have a User model
 const router = express.Router();
 
 // Root route
-// Root route
 router.get('/', (req, res) => {
     res.render('index', { title: 'Home Page' });
   });

@@ -3,7 +3,7 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/config.js';
 
 // Define the Transaction model
-const Transaction = sequelize.define('Transaction', {
+const transaction = sequelize.define('Transaction', {
   // Define the ID field
   id: {
     type: DataTypes.INTEGER, // Integer data type
@@ -36,8 +36,8 @@ const Transaction = sequelize.define('Transaction', {
   },
 }, {
   // Enable automatic creation of createdAt and updatedAt timestamps
-  timestamps: true,
+  timestamps: false,
 });
 
 // Export the Transaction model
-export default Transaction;
+export default transaction;
