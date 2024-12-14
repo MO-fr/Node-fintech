@@ -1,9 +1,10 @@
 // Import necessary modules
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/config.js';
+import User from './user.js'; // Import the User model here after defining it
 
 // Define the Transaction model
-const transaction = sequelize.define('Transaction', {
+const Transaction = sequelize.define('Transaction', {
   // Define the ID field
   id: {
     type: DataTypes.INTEGER, // Integer data type
@@ -36,8 +37,11 @@ const transaction = sequelize.define('Transaction', {
   },
 }, {
   // Enable automatic creation of createdAt and updatedAt timestamps
-  timestamps: false,
+  timestamps: true,
 });
 
+// Define relationships
+Transaction.belongsTo(User, { foreignKey: 'user_id' }); // Set up the relationship
+
 // Export the Transaction model
-export default transaction;
+export default Transaction;

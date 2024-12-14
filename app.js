@@ -1,8 +1,9 @@
-
 import express from 'express'; // Import the Express framework
 import path from 'path';
-import taskRoutes from './routes/index.js'; // Import the routes for tasks
+import taskRoutes from './routes/index.js'; // Import the routes from routes/index.js
 import { fileURLToPath } from 'url';
+import sequelize from './config/config.js'; // Import sequelize from the config.js file
+
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -17,14 +18,26 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware to parse incoming JSON requests
 app.use(express.json());
 
-// Route middleware for tasks
-// Routes starting with '/tasks' will be handled by the 'taskRoutes' module
+// Use the taskRoutes (this will handle all routes defined in routes/index.js)
 app.use('/api', taskRoutes);
 
-// Define the port for the server (uses the environment variable or defaults to 3000)
-const PORT = process.env.PORT || 3000;
+// Sync Sequelize models and start the server
+(async () => {
+  try {
+    // Authenticate and sync the database
+    await sequelize.authenticate();
+    console.log('Database connected...');
+    await sequelize.sync(); // No options
+    // Use `alter: true` for dev; change for production
+    console.log('Database synced...');
 
-// Start the server and listen on the specified port
-app.listen(PORT, () => {
-  console.log(`Server is running on port https://localhost:${PORT}`); // Log a message indicating the server is running
-});
+    // Start server
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('Error initializing app:', error);
+    process.exit(1); // Exit process on fatal error
+  }
+})();

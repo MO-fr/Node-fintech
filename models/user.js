@@ -3,7 +3,7 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/config.js';
 
 // Define the User model
-const user = sequelize.define('User', {
+const User = sequelize.define('User', {
   // Define the ID field
   id: {
     type: DataTypes.INTEGER, // Integer data type
@@ -45,6 +45,5 @@ const user = sequelize.define('User', {
   timestamps: true,
 });
 
-
 // Export the User model
-export default user;
+export default User;
