@@ -5,6 +5,8 @@ import bcrypt from 'bcrypt'; // Assuming you have a
 
 const router = express.Router();
 
+
+
 // Root route
 router.get('/', (req, res) => {
   res.render('index', { title: 'Home Page' });
