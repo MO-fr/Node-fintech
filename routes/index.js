@@ -1,9 +1,20 @@
 import express from 'express';
-import Transaction from '../models/transaction.js'; // Assuming you have a Transaction model
+import Transaction from '../models/transactions.js'; // Assuming you have a Transaction model
 import User from '../models/user.js'; // Assuming you have a User model
 import bcrypt from 'bcrypt'; // Assuming you have a
 
 const router = express.Router();
+
+router.get('/transactions', async (req, res) => {
+  try {
+    const userId = req.user.id; // Assuming user authentication provides `req.user`
+    const transactions = await Transaction.findAll({ where: { user_id: userId } });
+    res.render('transactions', { transactions });
+  } catch (error) {
+    console.error('Error fetching transactions:', error);
+    res.status(500).send('Server error');
+  }
+});
 
 
 
@@ -22,6 +33,8 @@ router.get('/transactions', async (req, res) => {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
+
+
 
 router.post('/transactions', async (req, res) => {
   try {

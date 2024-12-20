@@ -2,15 +2,18 @@ import express from 'express'; // Import the Express framework
 import path from 'path';
 import taskRoutes from './routes/index.js'; // Import the routes from routes/index.js
 import { fileURLToPath } from 'url';
-import sequelize from './config/config.js'; // Import sequelize from the config.js file
-
+import sequelize from './config/config.js'; // Import sequelize from the config.js file 
+import cookieParser from 'cookie-parser';
+import transactionRoutes from './routes/transactions.js';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 const app = express(); // Create an Express application
 
-app.use(express.json()); //“If the incoming data is in JSON format, go ahead and parse it for me and put the result in req.body.”
+app.use(transactionRoutes);
+
+app.use(express.json()); //If the incoming data is in JSON format, go ahead and parse it for me and put the result in req.body.”
 app.use(express.urlencoded({ extended: true })); //This tells my server, “If the incoming data is from a form (like in HTML), parse it and put it in
 
 app.post('/register', (req, res) => {
@@ -45,7 +48,7 @@ app.use('/', taskRoutes);
     console.log('Database synced...');
 
     // Start server
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 4000;
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
     });
