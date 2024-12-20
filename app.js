@@ -24,10 +24,11 @@ app.use(express.static('public'));
 
 app.get('/register', (req, res) => res.render('register'));
 
-
 app.get('/dashboard', (req, res) => {
-  res.render('dashboard'); // Render the dashboard view
+  res.render('dashboard'); // Render the 'dashboard.ejs' view
 });
+
+
 
 // Use the taskRoutes (this will handle all routes defined in routes/index.js)
 app.use('/', taskRoutes);
