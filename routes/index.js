@@ -1,7 +1,7 @@
 import express from 'express';
 import Transaction from '../models/transactions.js'; // Assuming you have a Transaction model
 import User from '../models/user.js'; // Assuming you have a User model
-import bcrypt from 'bcrypt'; // Assuming you have a
+import bcrypt from 'bcrypt'; 
 
 const router = express.Router();
 
@@ -91,24 +91,26 @@ router.get('/users', async (req, res) => {
 });
 
 
+
 router.post('/register', async (req, res) => {
+  const { username, email, password } = req.body;
+  console.log("SERVER::::", username, email, password);
+  
   try {
-    const { username, email, password } = req.body;
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     // Create the user in the database
     const user = await User.create({
-      username,
-      email,
-      password_hash: hashedPassword, // Save the hashed password
+      name: "Goon Test", 
+      username: username,
+      email: email,
+      password_hash: password, // Ensure you hash the password in production
+      balance: 7000
     });
 
-    console.log(`User ${user.username} registered successfully!`);
+    console.log(`User  ${user.username} registered successfully!`);
 
     // Redirect to dashboard after successful registration
     res.redirect('/dashboard');
+
   } catch (error) {
     console.error('Error registering user:', error);
     res.status(500).send('Internal Server Error');

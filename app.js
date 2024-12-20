@@ -11,28 +11,23 @@ const dirname = path.dirname(filename);
 
 const app = express(); // Create an Express application
 
-app.use(transactionRoutes);
+
 
 app.use(express.json()); //If the incoming data is in JSON format, go ahead and parse it for me and put the result in req.body.”
 app.use(express.urlencoded({ extended: true })); //This tells my server, “If the incoming data is from a form (like in HTML), parse it and put it in
 
-app.post('/register', (req, res) => {
-  const { username, email, password } = req.body;
-
-  // (Optional) Validate or save the data here.
-
-  // Redirect to the dashboard
-  res.redirect('/dashboard');
-});
-
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(dirname, './views'));
-app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
 
-// Middleware to parse incoming JSON requests
-app.use(express.json());
+app.use(express.static('public'));
+
+
+app.get('/register', (req, res) => res.render('register'));
+
+
+app.get('/dashboard', (req, res) => {
+  res.render('dashboard'); // Render the dashboard view
+});
 
 // Use the taskRoutes (this will handle all routes defined in routes/index.js)
 app.use('/', taskRoutes);
