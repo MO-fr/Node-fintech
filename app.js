@@ -8,9 +8,7 @@ import transactionRoutes from './routes/transactions.js';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
-
 const app = express(); // Create an Express application
-
 
 
 app.use(express.json()); //If the incoming data is in JSON format, go ahead and parse it for me and put the result in req.body.”
@@ -22,10 +20,10 @@ app.set('views', path.join(dirname, './views'));
 app.use(express.static('public'));
 
 
-app.get('/register', (req, res) => res.render('register'));
+app.get('/transactions', (req, res) => {res.render('transactions');
+}); // Render the transactions page
 
-app.get('/dashboard', (req, res) => {
-  res.render('dashboard'); // Render the 'dashboard.ejs' view
+app.get('/dashboard', (req, res) => {res.render('dashboard'); // Render the 'dashboard.ejs' view
 });
 
 
