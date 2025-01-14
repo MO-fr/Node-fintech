@@ -15,7 +15,7 @@
     <div class="card shadow-sm p-4" style="max-width: 400px; margin: auto; border-radius: 8px;">
       <h2 class="text-center mb-4">Create an Account</h2>
     
-      <form action="/register" method="POST">
+      <form action="/auth/register" method="POST"> <!-- API callback -->
         <div class="mb-3">
           <label for="username" class="form-label">Username:</label>
           <input type="text" id="username" name="username" class="form-control" required>
@@ -36,69 +36,5 @@
       <div id="message" class="text-center text-danger mt-3"></div>
     </div>
   </div>
-
-  <!-- Bootstrap JS Bundle (includes Popper) -->
-  <!-- <script>// Select the form element
-    const signUpBtn = document.getElementById('signUpBtn');
-    
-    // Add an event listener for the form submission
-    signUpBtn.addEventListener('click',async function (event) {
-      event.preventDefault(); // Prevent the default form submissiont
-    
-      // Perform any necessary validations or operations here
-      const username = document.getElementById('username').value;
-      console.log(username);
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const message = document.getElementById('message'); // Error message element
-      
-      // Clear any previous error messages
-      message.textContent = '';
-      message.style.display = 'none';
-    
-      // Validation
-      if (!username || !email || !password) {
-        message.textContent = '⚠️ Please fill out all fields correctly.';
-        message.style.display = 'block';
-        return;
-      }
-    
-      if (password.length < 6) {
-        message.textContent = '⚠️ Password must be at least 6 characters long!';
-        message.style.display = 'block';
-        return;
-      }
-    
-      // Redirect to the dashboard page if validation passes
-
-      const loginData = {
-        username,
-        email,
-        password
-
-      };
-      
-      console.log(loginData);
-
-       try {
-      const response = await fetch("/register", {
-      method: 'POST', // HTTP method
-      headers: {
-        'Content-Type': 'application/json', // Specify JSON format
-      },
-      body: JSON.stringify(loginData), // Convert object to JSON string
-    });
-
-    if (!response.ok) {
-      throw new Error(`failed to register: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log('Response from API:', data); // Handle the response
-  } catch (error) {
-    console.log('Error sending data:', error); // Handle errors
-  }
-  });
-    </script> Your custom JavaScript file -->
 </body>
 </html>
