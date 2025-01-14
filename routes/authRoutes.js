@@ -1,5 +1,5 @@
 import express from 'express';
-import User from '../models/User.js'; // Assuming you have a User model
+import User from '../models/user.js'; // Assuming you have a User model
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'; // Importing jsonwebtoken for token generation
 
@@ -68,15 +68,16 @@ router.post('/login', async (req, res) => {
     }
 
     // Generate a JWT token for the authenticated user
+                   //give the token an autograph from the user.id and username
     const token = jwt.sign({ userId: user.id, username: user.username }, process.env.SECRET_KEY, {
       expiresIn: '1h', // Token expires in 1 hour
     });
 
-    // Set the token as a cookie in the response
+    // Respond with a scrumptious cookie, it's an auth_token cookie
     res.cookie('auth_token', token, {
       httpOnly: true, // Cookie is not accessible via JavaScript
       secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-      maxAge: 3600000, // Cookie expires in 1 hour
+      maxAge: 3600000, // Cookie expires in 1 hour, need to throw it away :(
     });
 
     // Redirect to the dashboard after successful login
