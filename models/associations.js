@@ -1,5 +1,5 @@
-import User from './User.js'; // Import the User model from the user.js file
-import Transaction from './Transaction.js'; // Import the Transaction model from the transaction.js file
+import User from './user.js'; // Import the User model from the user.js file
+import Transaction from './transaction.js'; // Import the Transaction model from the transaction.js file
 
 
 // Define a one-to-many relationship where a User can have multiple Transactions

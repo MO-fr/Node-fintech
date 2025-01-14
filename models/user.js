@@ -27,7 +27,7 @@ const User = sequelize.define('User', {
   },
   // Define the balance attribute
   balance: {
-    type: DataTypes.FLOAT, // Set the data type to FLOAT
+    type: DataTypes.FLOAT, // Set the data type to a decimal
     defaultValue: 0.0, // Set the default value to 0.0
   },
 });
