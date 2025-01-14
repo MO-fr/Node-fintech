@@ -1,49 +1,52 @@
 // Import necessary modules
-import { DataTypes } from 'sequelize';
-import sequelize from '../config/config.js';
+import { DataTypes } from 'sequelize'; // Import DataTypes from sequelize for defining model attributes
+import sequelize from '../config/config.js'; // Import the sequelize instance configured for the database
+import bcrypt from 'bcrypt'; // Import bcrypt for password hashing
 
-// Define the User model
+// Define the User model using sequelize
 const User = sequelize.define('User', {
-  // Define the ID field
-  id: {
-    type: DataTypes.INTEGER, // Integer data type
-    primaryKey: true, // Primary key
-    autoIncrement: true, // Auto-incrementing
-  },
-  // Define the name field
-  name: {
-    type: DataTypes.STRING, // String data type
-    allowNull: false, // Cannot be null
-  },
-  // Define the username field
+  // Define the username attribute
   username: {
-    type: DataTypes.STRING, // String data type
-    allowNull: false, // Cannot be null
-    unique: true, // Unique constraint
+    type: DataTypes.STRING, // Set the data type to STRING
+    allowNull: false, // This field cannot be null
+    unique: true, // This field must be unique across all users
   },
-  // Define the email field
+  // Define the email attribute
   email: {
-    type: DataTypes.STRING, // String data type
-    allowNull: false, // Cannot be null
-    unique: true, // Unique constraint
+    type: DataTypes.STRING, // Set the data type to STRING
+    allowNull: false, // This field cannot be null
+    unique: true, // This field must be unique across all users
     validate: {
-      isEmail: true, // Validate email format
+      isEmail: true, // Ensure the email format is valid
     },
   },
-  // Define the password_hash field
-  password_hash: {
-    type: DataTypes.STRING, // String data type
-    allowNull: false, // Cannot be null
+  // Define the password attribute
+  password: {
+    type: DataTypes.STRING, // Set the data type to STRING
+    allowNull: false, // This field cannot be null
   },
-  // Define the balance field
+  // Define the balance attribute
   balance: {
-    type: DataTypes.DECIMAL(10, 2), // Decimal data type with 10 digits and 2 decimal places
-    defaultValue: 0.00, // Default value is 0.00
+    type: DataTypes.FLOAT, // Set the data type to a decimal
+    defaultValue: 0.0, // Set the default value to 0.0
   },
-}, {
-  // Enable automatic creation of createdAt and updatedAt timestamps
-  timestamps: true,
 });
 
-// Export the User model
+
+
+// Hook for hashing the password before saving a new user
+User.beforeCreate(async (user) => {
+  // Generate a salt for hashing
+  const salt = await bcrypt.genSalt(10);
+  // Hash the user's password with the generated salt
+  user.password = await bcrypt.hash(user.password, salt);
+});
+
+// Instance method for validating the password
+User.prototype.checkPassword = async function (password) {
+  // Compare the provided password with the hashed password stored in the database
+  return bcrypt.compare(password, this.password);
+};
+
+// Export the User model for use in other parts of the application
 export default User;
