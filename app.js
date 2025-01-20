@@ -59,7 +59,6 @@ app.get('/dashboard', authenticateToken, async (req, res) => {
 
 // Render views for basic navigation
 app.get('/', (req, res) => res.render('index'));
-// app.get('/signup', (req, res) => res.render('signup'));
 app.get('/login', (req, res) => res.render('login'));
 
 app.get('/transactions', authenticateToken, async (req, res) => {
