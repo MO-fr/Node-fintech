@@ -7,7 +7,7 @@ import transactionRoutes from './routes/transactionRoutes.js';
 import authenticateToken from './middleware/auth.js'; // Import authentication middleware
 import { User, Transaction } from './models/associations.js';
 import './models/associations.js';
-
+import indexRoutes from './routes/indexRoutes.js'
 
 
 import path from 'path';
@@ -34,6 +34,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes. Let's give them different names to avoid route name collisions. No casualties here
+app.use('/', indexRoutes);
 app.use('/auth', authRoutes); // Mount authentication routes
 app.use('/finance', transactionRoutes); // Mount transaction routes
 

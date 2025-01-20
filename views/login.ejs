@@ -3,69 +3,122 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <meta name="description" content="Login to your account">
+  <title>Login | Your Brand Name</title>
   <!-- Bootstrap CSS -->
-  <link href="styles/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #6c63ff;
+      --primary-hover: #584cc7;
+      --text-primary: #333;
+      --text-secondary: #555;
+    }
+
     body {
-      background: linear-gradient(135deg, #6c63ff, #b084cc);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, var(--primary-color), #b084cc);
+      display: grid;
+      place-items: center;
     }
 
     .login-container {
       background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-      max-width: 400px;
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
       width: 100%;
-      animation: fadeIn 0.5s ease-in-out;
+      max-width: 420px;
+      margin: 1rem;
+      animation: fadeIn 0.5s ease-out;
     }
 
-    .login-container h1 {
-      position: relative;
-      left: 77px;
-      font-size: 1.8rem;
-      color: #333;
-      font-weight: bold;
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
     }
 
-    .login-container p {
-      color: #555;
-      position: relative;
-      left: 86px;
+    .login-header h1 {
+      font-size: 2rem;
+      color: var(--text-primary);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
     }
 
-    .btn-primary {
-      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-      background-color: #6c63ff;
-      border: none;
-      position: relative;
-      top: 6px;
-      left: 149px;
-    }
-
-    .btn-primary:hover {
-      background-color: #584cc7;
+    .login-header p {
+      color: var(--text-secondary);
+      margin-bottom: 0;
     }
 
     .form-label {
       font-weight: 600;
-      color: #444;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
     }
 
     .form-control {
-      border-radius: 6px;
-      padding: 0.75rem;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 0.5rem;
+      transition: border-color 0.2s;
     }
 
-    .text-muted {
-      font-size: 0.9rem;
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      width: 100%;
+      transition: background-color 0.2s;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background-color: var(--primary-hover);
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .login-footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .remember-me {
+      margin: 1rem 0;
     }
 
     @keyframes fadeIn {
@@ -79,51 +132,114 @@
       }
     }
 
-    .login-footer {
-      font-size: 0.9rem;
-    }
-
-    .login-footer a {
-      color: #6c63ff;
-    }
-
-    .login-footer a:hover {
-      text-decoration: underline;
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <div class="row justify-content-center">
-      <div class="col-md-6 col-lg-4">
-        <div class="login-container">
-          <h1 class="text-center mb-3">Welcome Back</h1>
-          <p class="text-center text-muted mb-4">Please log in to your account</p>
-          <form action="/auth/login" method="POST">
-            <!-- Email -->
-            <div class="mb-3">
-              <label for="email" class="form-label">Email Address</label>
-              <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" required>
-            </div>
+  <main class="login-container">
+    <div class="login-header">
+      <h1>Welcome Back</h1>
+      <p>Please log in to your account</p>
+    </div>
 
-            <!-- Password -->
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="d-grid">
-              <button type="submit" class="btn btn-primary">Login</button>
-            </div>
-          </form>
-
-          <p class="text-center login-footer mt-3">
-            Don't have an account? <a href="/">Sign up here</a>
-          </p>
+    <form action="/auth/login" method="POST" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input 
+          type="email" 
+          name="email" 
+          id="email" 
+          class="form-control" 
+          placeholder="Enter your email"
+          autocomplete="email"
+          required
+          aria-required="true"
+        >
+        <div class="invalid-feedback">
+          Please enter a valid email address.
         </div>
       </div>
-    </div>
-  </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <div class="password-wrapper">
+          <input 
+            type="password" 
+            name="password" 
+            id="password" 
+            class="form-control" 
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            minlength="8"
+            required
+            aria-required="true"
+          >
+          <button 
+            type="button" 
+            class="password-toggle" 
+            aria-label="Toggle password visibility"
+            onclick="togglePassword()"
+          >
+            👁️
+          </button>
+        </div>
+        <div class="invalid-feedback">
+          Password is required and must be at least 8 characters.
+        </div>
+      </div>
+
+      <div class="remember-me">
+        <div class="form-check">
+          <input 
+            type="checkbox" 
+            class="form-check-input" 
+            id="remember" 
+            name="remember"
+          >
+          <label class="form-check-label" for="remember">
+            Remember me
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        Log In
+      </button>
+
+      <div class="login-footer">
+        <p>Don't have an account? <a href="/index">Sign up here</a></p>
+        
+      </div>
+    </form>
+  </main>
+
+  <script>
+    // Form validation
+    (function() {
+      'use strict';
+      const forms = document.querySelectorAll('.needs-validation');
+      
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    })();
+
+    // Password visibility toggle
+    function togglePassword() {
+      const passwordInput = document.getElementById('password');
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+    }
+  </script>
 </body>
 </html>
