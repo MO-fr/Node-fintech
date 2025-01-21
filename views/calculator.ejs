@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinTech Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .calculator-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            background: white;
+        }
+        .result-box {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        .error-message {
+            color: red;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container">
+        <div class="calculator-container">
+            <h2 class="text-center mb-4">Financial Calculator</h2>
+            
+            <!-- Calculator Type Selector -->
+            <select class="form-select mb-4" id="calculatorType">
+                <option value="loan">Loan Calculator</option>
+                <option value="investment">Investment Calculator</option>
+                <option value="savings">Savings Calculator</option>
+            </select>
+
+            <!-- Loan Calculator -->
+            <div id="loanCalc" class="calc-section">
+                <form id="loanForm" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label">Loan Amount ($)</label>
+                        <input type="number" name="amount" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Interest Rate (%)</label>
+                        <input type="number" name="rate" class="form-control" step="0.1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Loan Term (Years)</label>
+                        <input type="number" name="years" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Calculate</button>
+                </form>
+                <div id="loanResult" class="result-box d-none"></div>
+            </div>
+
+            <!-- Investment Calculator -->
+            <div id="investmentCalc" class="calc-section d-none">
+                <form id="investmentForm" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label">Initial Investment ($)</label>
+                        <input type="number" name="initial" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Monthly Contribution ($)</label>
+                        <input type="number" name="monthly" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Expected Annual Return (%)</label>
+                        <input type="number" name="return" class="form-control" step="0.1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Investment Period (Years)</label>
+                        <input type="number" name="period" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Calculate</button>
+                </form>
+                <div id="investmentResult" class="result-box d-none"></div>
+            </div>
+
+            <!-- Savings Calculator -->
+            <div id="savingsCalc" class="calc-section d-none">
+                <form id="savingsForm" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label">Target Amount ($)</label>
+                        <input type="number" name="target" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Time Period (Years)</label>
+                        <input type="number" name="period" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Calculate</button>
+                </form>
+                <div id="savingsResult" class="result-box d-none"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Switch between calculators
+        document.getElementById('calculatorType').addEventListener('change', function() {
+            document.querySelectorAll('.calc-section').forEach(section => section.classList.add('d-none'));
+            document.getElementById(this.value + 'Calc').classList.remove('d-none');
+        });
+
+        // Generic form handler
+        function handleFormSubmit(formId, resultId) {
+            const form = document.getElementById(formId);
+            const resultDiv = document.getElementById(resultId);
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+                data.type = formId.replace('Form', '');
+
+                try {
+                    const response = await fetch('/calculate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        let html = '<h5>Results:</h5>';
+                        for (const [key, value] of Object.entries(result)) {
+                            if (key !== 'success') {
+                                html += `<p><strong>${key}:</strong> $${value}</p>`;
+                            }
+                        }
+                        resultDiv.innerHTML = html;
+                        resultDiv.classList.remove('d-none');
+                    } else {
+                        throw new Error(result.error);
+                    }
+                } catch (error) {
+                    resultDiv.innerHTML = `<div class="error-message">Error: ${error.message}</div>`;
+                    resultDiv.classList.remove('d-none');
+                }
+            });
+        }
+
+        // Initialize form handlers
+        handleFormSubmit('loanForm', 'loanResult');
+        handleFormSubmit('investmentForm', 'investmentResult');
+        handleFormSubmit('savingsForm', 'savingsResult');
+    </script>
+</body>
+</html>

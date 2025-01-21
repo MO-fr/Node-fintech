@@ -8,7 +8,7 @@ import authenticateToken from './middleware/auth.js'; // Import authentication m
 import { User, Transaction } from './models/associations.js';
 import './models/associations.js';
 import indexRoutes from './routes/indexRoutes.js'
-
+import calculatorRoutes from './routes/calculatorRoutes.js'
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -37,8 +37,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRoutes);
 app.use('/auth', authRoutes); // Mount authentication routes
 app.use('/finance', transactionRoutes); // Mount transaction routes
+app.use ('/', calculatorRoutes)
 
 // Protected route for the dashboar
+
+app.get('/calculator', (req, res) => {
+  res.render('calculator'); // Render the 'calculator.ejs' page
+  });
+
 
 app.get('/dashboard', authenticateToken, async (req, res) => {
   try {
@@ -62,6 +68,7 @@ app.get('/dashboard', authenticateToken, async (req, res) => {
 app.get('/', (req, res) => res.render('index'));
 app.get('/login', (req, res) => res.render('login'));
 
+app.get
 app.get('/transactions', authenticateToken, async (req, res) => {
   try {
     const user = await User.findByPk(req.user.userId, {
