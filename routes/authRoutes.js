@@ -3,6 +3,7 @@ import User from '../models/user.js'; // Assuming you have a User model
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'; // Importing jsonwebtoken for token generation
 
+
 const router = express.Router();
 
 // Root route
@@ -54,7 +55,7 @@ router.post('/login', async (req, res) => {
     if (!email || !password) {
       return res.status(400).send('All fields are required.'); // Respond with an error if any field is missing
     }
-
+    
     // Find the user by email
     const user = await User.findOne({ where: { email } });
     if (!user) {

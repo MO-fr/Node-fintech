@@ -10,6 +10,7 @@
   "author": "mo",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
@@ -21,6 +22,7 @@
     "express-session": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.5",
+    "react-toastify": "^11.0.3",
     "sequelize": "^6.37.5"
   },
   "keywords": [],

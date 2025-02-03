@@ -1,0 +1,64 @@
+:root {
+    --primary-blue: #2563eb;
+    --dark-blue: #1e40af;
+}
+
+body {
+    background-color: #f8fafc;
+}
+
+.navbar {
+    background: linear-gradient(to right, #1e40af, #2563eb);
+    padding: 1rem;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.main-card {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: white;
+}
+
+.stats-card {
+    background: white;
+    padding: 1.5rem;
+}
+
+.btn-custom {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-custom:hover {
+    background-color: var(--dark-blue);
+    color: white;
+}
+
+.stats-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-blue);
+}
+
+.card-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}

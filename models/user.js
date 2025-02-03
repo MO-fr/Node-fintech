@@ -2,7 +2,7 @@
 import { DataTypes } from 'sequelize'; // Import DataTypes from sequelize for defining model attributes
 import sequelize from '../config/config.js'; // Import the sequelize instance configured for the database
 import bcrypt from 'bcrypt'; // Import bcrypt for password hashing
-
+ 
 // Define the User model using sequelize
 const User = sequelize.define('User', {
   // Define the username attribute
@@ -31,7 +31,6 @@ const User = sequelize.define('User', {
     defaultValue: 0.0, // Set the default value to 0.0
   },
 });
-
 
 
 // Hook for hashing the password before saving a new user

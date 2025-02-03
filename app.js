@@ -6,9 +6,10 @@ import authRoutes from './routes/authRoutes.js'; // Router for authentication ro
 import transactionRoutes from './routes/transactionRoutes.js';
 import authenticateToken from './middleware/auth.js'; // Import authentication middleware
 import { User, Transaction } from './models/associations.js';
-import './models/associations.js';
+import './models/associations.js'; 
 import indexRoutes from './routes/indexRoutes.js'
 import calculatorRoutes from './routes/calculatorRoutes.js'
+
 
 import path from 'path';
 import { fileURLToPath } from 'url';
